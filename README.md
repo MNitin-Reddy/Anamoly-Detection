@@ -1,4 +1,4 @@
-# Anomaly Detection
+# Anomaly Detection in Server Networks
 
 We will implement the anomaly detection algorithm and apply it to detect failing servers on a network.
 
@@ -21,12 +21,12 @@ pip install numpy matplotlib
 
 ### 2.1 Problem Statement
 
-The task involves implementing an anomaly detection algorithm to detect anomalous behavior in server computers. The dataset contains two features:
+The task involves implementing an anomaly detection algorithm to detect anomalous behaviour in server computers. The dataset contains two features:
 
 - Throughput (mb/s)
 - Latency (ms)
 
-The dataset consists of 307 examples representing the servers' behavior, with the majority of examples being "normal" while some may represent anomalies. The goal is to use a Gaussian distribution model to detect these anomalies.
+The dataset consists of 307 examples representing the servers' behaviour. The majority of examples are "normal," while some may represent anomalies. The goal is to use a Gaussian distribution model to detect these anomalies.
 
 ### 2.2 Dataset
 
@@ -46,7 +46,7 @@ X_train, X_val, y_val = load_data()
 
 ### 2.3 Gaussian Distribution
 
-To perform anomaly detection, the algorithm needs to fit a Gaussian distribution to the data's features and then calculate the probability of each example under this distribution. The Gaussian distribution is characterized by two parameters: mean ($\mu$) and variance ($\sigma^2$).
+To perform anomaly detection, the algorithm needs to fit a Gaussian distribution to the data's features and then calculate the probability of each example under this distribution. Two parameters characterize the Gaussian distribution: mean ($\mu$) and variance ($\sigma^2$).
 
 For each feature in the dataset, the algorithm estimates the mean and variance, which are then used to evaluate the probability density of each data point.
 ```python
@@ -70,8 +70,8 @@ plt.show()
 
 ### Multivariate Gaussian
 
-To evaluate the probability density function, the algorithm uses the multivariate Gaussian distribution, which calculates the probability for each data point based on the estimated mean and variance.
-```
+The algorithm uses the multivariate Gaussian distribution to evaluate the probability density function. This distribution calculates the probability for each data point based on the estimated mean and variance.
+```python
 def multivariate_gaussian(X, mu, var):
     k = len(mu)
     if var.ndim == 1:
@@ -129,3 +129,19 @@ print('Best epsilon found using cross-validation: %e' % epsilon_high)
 print('Best F1 on Cross Validation Set: %f' % F1_high)
 print('# Anomalies found: %d' % sum(p_high < epsilon_high))
 ```
+
+![Anomaly Detection Results](Anamolies.png)
+
+## Conclusion
+
+In this project, we successfully implemented an anomaly detection algorithm to identify failing servers in a network. By using a Gaussian distribution, we estimated the parameters for each feature and applied these to detect anomalies in the dataset.
+
+The approach began with a 2D dataset, where we visualized the anomalies, and extended to a higher-dimensional dataset with 11 features, reflecting a more realistic scenario. After training the model, we selected an optimal threshold using cross-validation and calculated the F1 score for the best results.
+
+### Key takeaways:
+- The anomaly detection algorithm was effective in identifying outliers, with a good balance between precision and recall, as demonstrated by the F1 score of 0.615 on the cross-validation set.
+- The model detected 117 anomalies in the high-dimensional dataset, which indicates its potential for real-world applications, such as detecting server failures or other abnormal behaviours in various industries.
+- The project showcased important machine learning concepts like Gaussian distribution estimation, multivariate anomaly detection, and model evaluation using the F1 score.
+
+This project illustrates the power of anomaly detection in monitoring systems and networks, offering valuable insights into the health and performance of computing infrastructures.
+
